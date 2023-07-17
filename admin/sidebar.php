@@ -15,6 +15,10 @@ if (!isset($_SESSION['user_id'])) {
 
             <div class="sb-sidenav-menu-heading">Interface</div>
             <!-- Yang boleh di isi, mulai dari sini -->
+            <a class="nav-link" href="kalender_event.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Kalender Event
+            </a>
 
             <!-- Sampai sini -->
 
