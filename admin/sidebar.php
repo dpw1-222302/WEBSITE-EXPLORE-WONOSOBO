@@ -19,6 +19,10 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Kalender Event
             </a>
+            <a class="nav-link" href="gunung.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Gunung
+            </a>
 
             <!-- Sampai sini -->
 
