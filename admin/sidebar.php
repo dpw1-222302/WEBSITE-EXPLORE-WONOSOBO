@@ -27,6 +27,10 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Air Terjun
             </a>
+            <a class="nav-link" href="danau.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Danau
+            </a>
 
 
             <!-- Sampai sini -->
