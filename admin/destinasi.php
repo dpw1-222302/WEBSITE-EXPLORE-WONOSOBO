@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Oleh-oleh</title>
+    <title>Destinasi</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -30,13 +30,13 @@ if (!isset($_SESSION['user_id'])) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Oleh-oleh</h1>
+                    <h1 class="mt-4">Destinasi</h1>
                     <!-- isi konten mulai dari sini -->
                     <div class="table-responsive mt-3">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nama Oleh-oleh</th>
+                                    <th>Nama Destinasi</th>
                                     <th>Gambar</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -44,49 +44,53 @@ if (!isset($_SESSION['user_id'])) {
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_oleh_oleh";
+                                $query = "SELECT * FROM tabel_destinasi";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
                                         <td style="width: 700px;">
-                                            <?= $data['nama_oleh_oleh'] ?>
+                                            <?= $data['nama_destinasi'] ?>
                                         </td>
+
+                                        <td>
+                                            <img src="<?= $data['img_destinasi'] ?>" class="" alt="" style="width: 200px;">
+                                        </td>
+
                                         
                                         <td>
-                                            <img src="<?= $data['img_oleh_oleh'] ?>" class="" alt="" style="width: 200px;">
-                                        </td>
-
-
-                                        <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['oleh_oleh_id'] ?>">Edit</button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['oleh_oleh_id'] ?>">Hapus</button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['destinasi_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['destinasi_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['oleh_oleh_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                    <div class="modal fade" id="editDataModal<?= $data['destinasi_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Oleh-oleh</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Destinasi</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form method="POST" action="oleh_oleh/ubah.php"> <!-- arahkan ke folder yang dituju -->
+                                                <form method="POST" action="destinasi/ubah.php"> <!-- arahkan ke folder yang dituju -->
                                                     <div class="modal-body">
-                                                        <input type="hidden" name="oleh_oleh_id" value="<?= $data['oleh_oleh_id'] ?>">
+                                                        <input type="hidden" name="destinasi_id" value="<?= $data['destinasi_id'] ?>">
                                                         <div class="form-group">
-                                                            <label for="nama_oleh_oleh">Nama Oleh-oleh</label>
-                                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh" value="<?= $data['nama_oleh_oleh'] ?>">
+                                                            <label for="nama_destinasi">Nama Destinasi</label>
+                                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi" value="<?= $data['nama_destinasi'] ?>">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="img_oleh_oleh">Gambar</label>
-                                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh" value="<?= $data['img_oleh_oleh'] ?>">
+                                                            <label for="img_destinasi">Gambar</label>
+                                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi" value="<?= $data['img_destinasi'] ?>">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="deskripsi_oleh_oleh">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_oleh_oleh" rows="3" name="deskripsi_oleh_oleh"><?= $data['deskripsi_oleh_oleh'] ?></textarea>
+                                                            <label for="deskripsi_destinasi">Deskripsi</label>
+                                                            <textarea required class="form-control" id="deskripsi_destinasi" rows="3" name="deskripsi_destinasi"><?= $data['deskripsi_destinasi'] ?></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="link_google_maps_destinasi">Link Google Maps</label>
+                                                            <input required type="text" class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi" value="<?= $data['link_google_maps_destinasi'] ?>">
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -98,21 +102,21 @@ if (!isset($_SESSION['user_id'])) {
                                         </div>
                                     </div>
                                     <!-- Modal Hapus Data -->
-                                    <div class="modal fade" id="hapusDataModal<?= $data['oleh_oleh_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="hapusDataModalLabel<?= $data['oleh_oleh_id'] ?>" aria-hidden="true">
+                                    <div class="modal fade" id="hapusDataModal<?= $data['destinasi_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="hapusDataModalLabel<?= $data['destinasi_id'] ?>" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="hapusDataModalLabel<?= $data['oleh_oleh_id'] ?>">Konfirmasi Penghapusan</h5>
+                                                    <h5 class="modal-title" id="hapusDataModalLabel<?= $data['destinasi_id'] ?>">Konfirmasi Penghapusan</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Apakah Anda yakin ingin menghapus data oleh-oleh ini?
+                                                    Apakah Anda yakin ingin menghapus data destinasi ini?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                    <a href="oleh_oleh/hapus.php?id=<?= $data['oleh_oleh_id'] ?>" class="btn btn-danger">Hapus</a> <!-- arahkan ke folder yang dituju -->
+                                                    <a href="destinasi/hapus.php?id=<?= $data['destinasi_id'] ?>" class="btn btn-danger">Hapus</a> <!-- arahkan ke folder yang dituju -->
                                                 </div>
                                             </div>
                                         </div>
@@ -130,25 +134,29 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
-                                        Tambah Data Oleh-oleh
+                                        Tambah Data Destinasi
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="oleh_oleh/tambah.php"> <!-- arahkan ke folder yang dituju -->
+                                <form method="POST" action="destinasi/tambah.php"> <!-- arahkan ke folder yang dituju -->
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="nama_oleh_oleh">Nama Oleh-oleh</label>
-                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh">
+                                            <label for="nama_destinasi">Nama Destinasi</label>
+                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi">
                                         </div>
                                         <div class="form-group">
-                                            <label for="img_oleh_oleh">Gambar</label>
-                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh">
+                                            <label for="img_destinasi">Gambar</label>
+                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi">
                                         </div>
                                         <div class="form-group">
-                                            <label for="deskripsi_oleh_oleh">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_oleh_oleh" rows="3" name="deskripsi_oleh_oleh"></textarea>
+                                            <label for="deskripsi_destinasi">Deskripsi</label>
+                                            <textarea required class="form-control" id="deskripsi_destinasi" rows="3" name="deskripsi_destinasi"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="link_google_maps_destinasi">Link Google Maps</label>
+                                            <input required type="text" class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
