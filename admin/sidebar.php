@@ -35,6 +35,14 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Makanan Khas
             </a>
+            <a class="nav-link" href="oleh_oleh.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Oleh-oleh
+            </a>
+            <a class="nav-link" href="destinasi.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Destinasi
+            </a>
 
             <!-- Sampai sini -->
 
@@ -47,7 +55,7 @@ if (!isset($_SESSION['user_id'])) {
             <div class="sb-sidenav-menu-heading">Template</div>
             <a class="nav-link" href="template.php">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                Tempate Halaman
+                Template Halaman
             </a>
         </div>
     </div>
