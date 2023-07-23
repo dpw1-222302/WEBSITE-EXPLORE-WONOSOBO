@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
                                 <div class="card-body">
                                     <form action="proses_login.php" method="POST">
                                         <div class="form-floating mb-3">
-                                            <input required class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email_user" />
+                                            <input required class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="email_user" autocomplete="off"/>
                                             <label for="inputEmail">Email address</label>
                                         </div>
                                         <div class="form-floating mb-3">

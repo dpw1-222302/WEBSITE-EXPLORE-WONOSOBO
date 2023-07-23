@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,9 +37,8 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Gambar</th>
                                     <th>Nama Gunung</th>
-                                    <th>Deskripsi</th>
-                                    <th>Kecamatan</th>
                                     <th>Ketinggian</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -46,34 +46,32 @@ if (!isset($_SESSION['user_id'])) {
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_gunung";
+                                $query = "SELECT * FROM tabel_gunung ORDER BY gunung_id DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
                                         <td>
+                                            <img src="<?= $data['img_gunung'] ?>" alt="" style="width: 200px;">
+                                        </td>
+                                        <td style="width: 500px;">
                                             <?= $data['nama_gunung'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['deskripsi_gunung'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['kecamatan_gunung'] ?>
                                         </td>
                                         <td>
                                             <?= $data['ketinggian_gunung'] ?> MDPL
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['gunung_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['gunung_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['gunung_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['gunung_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['gunung_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['gunung_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Gunung</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Gunung</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -82,24 +80,27 @@ if (!isset($_SESSION['user_id'])) {
                                                     <div class="modal-body">
                                                         <input type="hidden" name="gunung_id" value="<?= $data['gunung_id'] ?>">
                                                         <div class="form-group">
+                                                            <label for="img_gunung">Gambar</label>
+                                                            <input required type="text" class="form-control" id="img_gunung" name="img_gunung" value="<?= $data['img_gunung'] ?>" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="nama_gunung">Nama Gunung</label>
-                                                            <input required type="text" class="form-control" id="nama_gunung" name="nama_gunung" value="<?= $data['nama_gunung'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_gunung" name="nama_gunung" value="<?= $data['nama_gunung'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="deskripsi_gunung">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_gunung" rows="3" name="deskripsi_gunung"><?= $data['deskripsi_gunung'] ?></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="kecamatan_gunung">Kecamatan</label>
-                                                            <select required class="form-control" id="kecamatan_gunung" name="kecamatan_gunung">
-                                                                <option value="">Pilih Kecamatan:</option>
-                                                                <option value="1" <?= ($data['kecamatan_gunung'] == 1) ? 'selected' : '' ?>>Kecamatan 1</option>
-                                                                <option value="2" <?= ($data['kecamatan_gunung'] == 2) ? 'selected' : '' ?>>Kecamatan 2</option>
-                                                            </select>
+                                                            <textarea id="deskripsi_gunung" name="deskripsigunung<?= $data['gunung_id'] ?>"><?= $data['deskripsi_gunung'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsigunung<?= $data['gunung_id'] ?>');
+                                                            </script>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="ketinggian_gunung">Ketinggian</label>
                                                             <input required type="number" class="form-control" id="ketinggian_gunung" name="ketinggian_gunung" value="<?= $data['ketinggian_gunung'] ?>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="link_google_maps_gunung">Link Google Maps</label>
+                                                            <textarea required class="form-control" id="link_google_maps_gunung" name="link_google_maps_gunung"><?= $data['link_google_maps_gunung'] ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -130,6 +131,26 @@ if (!isset($_SESSION['user_id'])) {
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['gunung_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Gunung</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_gunung'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_gunung'] ?></h2>
+                                                    <p class="mb-3"><?= $data['ketinggian_gunung'] ?> MDPL</p>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_gunung'] ?></p>
+                                                    <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_gunung'] ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -138,8 +159,8 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
@@ -152,24 +173,27 @@ if (!isset($_SESSION['user_id'])) {
                                 <form method="POST" action="gunung/tambah.php"> <!-- arahkan ke folder yang dituju -->
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <label for="img_gunung">Gambar</label>
+                                            <input required type="text" class="form-control" id="img_gunung" name="img_gunung" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="nama_gunung">Nama Gunung</label>
-                                            <input required type="text" class="form-control" id="nama_gunung" name="nama_gunung">
+                                            <input required type="text" class="form-control" id="nama_gunung" name="nama_gunung" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_gunung">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_gunung" rows="3" name="deskripsi_gunung"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="kecamatan_gunung">Kecamatan</label>
-                                            <select required class="form-control" id="kecamatan_gunung" name="kecamatan_gunung">
-                                                <option value="">Pilih Kecamatan:</option>
-                                                <option value="1">Kecamatan 1</option>
-                                                <option value="2">Kecamatan 2</option>
-                                            </select>
+                                            <textarea id="deskripsi_gunung" name="deskripsigunung"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsigunung');
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label for="ketinggian_gunung">Ketinggian</label>
                                             <input required type="number" class="form-control" id="ketinggian_gunung" name="ketinggian_gunung">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="link_google_maps_gunung">Link Google Maps</label>
+                                            <textarea required class="form-control" id="link_google_maps_gunung" name="link_google_maps_gunung"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

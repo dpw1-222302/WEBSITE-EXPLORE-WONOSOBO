@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,36 +37,47 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
+                                    <th>Gambar</th>
+                                    <th>Nama Event</th>
                                     <th>Tanggal</th>
+                                    <th>Tempat</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_kalender_event";
+                                $query = "SELECT * FROM tabel_kalender_event ORDER BY tanggal_event DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
+                                    $timestamp = strtotime($data['tanggal_event']);
+                                    $formattedDate = date('l, d F Y', $timestamp);
                                 ?>
                                     <tr>
                                         <td>
+                                            <img src="<?= $data['img_kalender_event'] ?>" alt="" style="width: 200px;">
+                                        </td>
+                                        <td style="width: 400px;">
                                             <?= $data['nama_event'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['tanggal_event'] ?>
+                                            <?= $formattedDate ?>
+                                        </td>
+                                        <td style="width: 400px;">
+                                            <?= $data['tempat_event'] ?>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['kalender_event_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['kalender_event_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['kalender_event_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['kalender_event_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['kalender_event_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['kalender_event_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Pengguna</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Event</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -74,32 +86,23 @@ if (!isset($_SESSION['user_id'])) {
                                                     <div class="modal-body">
                                                         <input type="hidden" name="kalender_event_id" value="<?= $data['kalender_event_id'] ?>">
                                                         <div class="form-group">
+                                                            <label for="img_kalender_event">Gambar</label>
+                                                            <input required type="text" class="form-control" id="img_kalender_event" name="img_kalender_event" value="<?= $data['img_kalender_event'] ?>" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="nama_event">Nama Event</label>
-                                                            <input required type="text" class="form-control" id="nama_event" name="nama_event" value="<?= $data['nama_event'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_event" name="nama_event" value="<?= $data['nama_event'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="deskripsi_event">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_event" rows="3" name="deskripsi_event"><?= $data['deskripsi_event'] ?></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="kategori_event">Kategori</label>
-                                                            <select required class="form-control" id="kategori_event" name="kategori_event">
-                                                                <option value="">Pilih Katogori:</option>
-                                                                <option value="1" <?= ($data['kategori_event'] == 1) ? 'selected' : '' ?>>Event Musik</option>
-                                                                <option value="2" <?= ($data['kategori_event'] == 2) ? 'selected' : '' ?>>Event Kuliner</option>
-                                                            </select>
+                                                            <textarea id="deskripsi_event" name="deskripsievent<?= $data['kalender_event_id'] ?>"><?= $data['deskripsi_event'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsievent<?= $data['kalender_event_id'] ?>');
+                                                            </script>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="tempat_event">Tempat</label>
-                                                            <input required type="text" class="form-control" id="tempat_event" name="tempat_event" value="<?= $data['tempat_event'] ?>">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="kecamatan_event">Kecamatan</label>
-                                                            <select required class="form-control" id="kecamatan_event" name="kecamatan_event">
-                                                                <option value="">Pilih Kecamatan:</option>
-                                                                <option value="1" <?= ($data['kecamatan_event'] == 1) ? 'selected' : '' ?>>Kecamatan 1</option>
-                                                                <option value="2" <?= ($data['kecamatan_event'] == 2) ? 'selected' : '' ?>>Kecamatan 2</option>
-                                                            </select>
+                                                            <input required type="text" class="form-control" id="tempat_event" name="tempat_event" value="<?= $data['tempat_event'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="tanggal_event">Tanggal</label>
@@ -107,7 +110,7 @@ if (!isset($_SESSION['user_id'])) {
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="link_google_maps_event">Link Google Maps</label>
-                                                            <input required type="text" class="form-control" id="link_google_maps_event" name="link_google_maps_event" value="<?= $data['link_google_maps_event'] ?>">
+                                                            <textarea required class="form-control" id="link_google_maps_event" name="link_google_maps_event"><?= $data['link_google_maps_event'] ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -129,11 +132,32 @@ if (!isset($_SESSION['user_id'])) {
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Apakah Anda yakin ingin menghapus data pengguna ini?
+                                                    Apakah Anda yakin ingin menghapus data Event ini?
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                                     <a href="kalender_event/hapus.php?id=<?= $data['kalender_event_id'] ?>" class="btn btn-danger">Hapus</a> <!-- arahkan ke folder yang dituju -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['kalender_event_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Event</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_kalender_event'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                                                    <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                                                    <p class="mb-3">Tanggal: <?= $formattedDate ?></p>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                                                    <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_event'] ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -146,12 +170,12 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
-                                        Tambah Data Pengguna
+                                        Tambah Data Event
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -160,32 +184,23 @@ if (!isset($_SESSION['user_id'])) {
                                 <form method="POST" action="kalender_event/tambah.php"> <!-- arahkan ke folder yang dituju -->
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <label for="img_kalender_event">Gambar</label>
+                                            <input required type="text" class="form-control" id="img_kalender_event" name="img_kalender_event" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="nama_event">Nama Event</label>
-                                            <input required type="text" class="form-control" id="nama_event" name="nama_event">
+                                            <input required type="text" class="form-control" id="nama_event" name="nama_event" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_event">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_event" rows="3" name="deskripsi_event"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="kategori_event">Kategori</label>
-                                            <select required class="form-control" id="kategori_event" name="kategori_event">
-                                                <option value="">Pilih Katogori:</option>
-                                                <option value="1">Event Musik</option>
-                                                <option value="2">Event Kuliner</option>
-                                            </select>
+                                            <textarea id="deskripsi_event" name="deskripsievent"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsievent');
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label for="tempat_event">Tempat</label>
-                                            <input required type="text" class="form-control" id="tempat_event" name="tempat_event">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="kecamatan_event">Kecamatan</label>
-                                            <select required class="form-control" id="kecamatan_event" name="kecamatan_event">
-                                                <option value="">Pilih Kecamatan:</option>
-                                                <option value="1">Kecamatan 1</option>
-                                                <option value="2">Kecamatan 2</option>
-                                            </select>
+                                            <input required type="text" class="form-control" id="tempat_event" name="tempat_event" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="tanggal_event">Tanggal</label>
@@ -193,7 +208,7 @@ if (!isset($_SESSION['user_id'])) {
                                         </div>
                                         <div class="form-group">
                                             <label for="link_google_maps_event">Link Google Maps</label>
-                                            <input required type="text" class="form-control" id="link_google_maps_event" name="link_google_maps_event">
+                                            <textarea required class="form-control" id="link_google_maps_event" name="link_google_maps_event"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

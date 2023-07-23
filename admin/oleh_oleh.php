@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,39 +37,37 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nama Oleh-oleh</th>
                                     <th>Gambar</th>
+                                    <th>Nama Oleh-oleh</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_oleh_oleh";
+                                $query = "SELECT * FROM tabel_oleh_oleh ORDER BY oleh_oleh_id DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
-                                        <td style="width: 700px;">
-                                            <?= $data['nama_oleh_oleh'] ?>
-                                        </td>
-                                        
                                         <td>
                                             <img src="<?= $data['img_oleh_oleh'] ?>" class="" alt="" style="width: 200px;">
                                         </td>
-
-
+                                        <td style="width: 700px;">
+                                            <?= $data['nama_oleh_oleh'] ?>
+                                        </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['oleh_oleh_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['oleh_oleh_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['oleh_oleh_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['oleh_oleh_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['oleh_oleh_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['oleh_oleh_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Oleh-oleh</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Oleh-oleh</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -78,15 +77,18 @@ if (!isset($_SESSION['user_id'])) {
                                                         <input type="hidden" name="oleh_oleh_id" value="<?= $data['oleh_oleh_id'] ?>">
                                                         <div class="form-group">
                                                             <label for="nama_oleh_oleh">Nama Oleh-oleh</label>
-                                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh" value="<?= $data['nama_oleh_oleh'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh" value="<?= $data['nama_oleh_oleh'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="img_oleh_oleh">Gambar</label>
-                                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh" value="<?= $data['img_oleh_oleh'] ?>">
+                                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh" value="<?= $data['img_oleh_oleh'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="deskripsi_oleh_oleh">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_oleh_oleh" rows="3" name="deskripsi_oleh_oleh"><?= $data['deskripsi_oleh_oleh'] ?></textarea>
+                                                            <textarea id="deskripsi_oleh_oleh" name="deskripsidestinasi<?= $data['oleh_oleh_id'] ?>"><?= $data['deskripsi_oleh_oleh'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsidestinasi<?= $data['oleh_oleh_id'] ?>');
+                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -117,6 +119,24 @@ if (!isset($_SESSION['user_id'])) {
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['oleh_oleh_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Oleh-oleh</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_oleh_oleh'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_oleh_oleh'] ?></h2>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_oleh_oleh'] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -125,8 +145,8 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
@@ -140,15 +160,18 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="nama_oleh_oleh">Nama Oleh-oleh</label>
-                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh">
+                                            <input required type="text" class="form-control" id="nama_oleh_oleh" name="nama_oleh_oleh" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="img_oleh_oleh">Gambar</label>
-                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh">
+                                            <input required type="text" class="form-control" id="img_oleh_oleh" name="img_oleh_oleh" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_oleh_oleh">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_oleh_oleh" rows="3" name="deskripsi_oleh_oleh"></textarea>
+                                            <textarea id="deskripsi_oleh_oleh" name="deskripsioleholeh"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsioleholeh');
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
