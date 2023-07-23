@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // mengambil data dari inputan user
     $nama_oleh_oleh = $_POST['nama_oleh_oleh'];
     $img_oleh_oleh = $_POST['img_oleh_oleh'];
-    $deskripsi_oleh_oleh = $_POST['deskripsi_oleh_oleh'];
+    $deskripsi_oleh_oleh = $_POST['deskripsioleholeh'];
     // memasukan data menggunakan query sql
     $query = "INSERT INTO tabel_oleh_oleh (nama_oleh_oleh,img_oleh_oleh,deskripsi_oleh_oleh) VALUES ('$nama_oleh_oleh', '$img_oleh_oleh', '$deskripsi_oleh_oleh')";
     // jika berhasil maka dialihkan ke halamaan produk

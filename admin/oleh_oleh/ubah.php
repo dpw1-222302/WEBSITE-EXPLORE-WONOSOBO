@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $oleh_oleh_id = $_POST['oleh_oleh_id'];
     $nama_oleh_oleh = $_POST['nama_oleh_oleh'];
     $img_oleh_oleh = $_POST['img_oleh_oleh'];
-    $deskripsi_oleh_oleh  = $_POST['deskripsi_oleh_oleh'];
+    $deskripsi_oleh_oleh  = $_POST["deskripsidestinasi$oleh_oleh_id"];
     // mengubah data menggunakan query sql
     $query = "UPDATE tabel_oleh_oleh SET nama_oleh_oleh = '$nama_oleh_oleh', img_oleh_oleh = '$img_oleh_oleh', deskripsi_oleh_oleh  = '$deskripsi_oleh_oleh' WHERE oleh_oleh_id = '$oleh_oleh_id'";
     // jika berhasil maka dialihkan ke halamaan produk

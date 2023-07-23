@@ -61,7 +61,17 @@ if (!isset($_SESSION['user_id'])) {
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['user_id'] ?>">Edit</button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['user_id'] ?>">Hapus</button>
+                                            <?php
+                                            if (isset($_SESSION['user_id'])) {
+                                                // Ganti user_id_sedang_digunakan dengan nilai user_id yang ingin di-disabled tombol hapusnya
+
+                                                if ($_SESSION['user_id'] === $data['user_id']) {
+                                                    echo "<button type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#hapusDataModal" . $data['user_id'] . "' disabled>Hapus</button>";
+                                                } else {
+                                                    echo "<button type='button' class='btn btn-danger btn-sm' data-toggle='modal' data-target='#hapusDataModal" . $data['user_id'] . "'>Hapus</button>";
+                                                }
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
@@ -79,15 +89,15 @@ if (!isset($_SESSION['user_id'])) {
                                                         <input type="hidden" name="user_id" value="<?= $data['user_id'] ?>">
                                                         <div class="form-group">
                                                             <label for="nama_lengkap_user">Nama Lengkap</label>
-                                                            <input required type="text" class="form-control" id="nama_lengkap_user" name="nama_lengkap_user" value="<?= $data['nama_lengkap_user'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_lengkap_user" name="nama_lengkap_user" value="<?= $data['nama_lengkap_user'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="no_hp_user">No. HP</label>
-                                                            <input required type="number" class="form-control" id="no_hp_user" name="no_hp_user" value="<?= $data['no_hp_user'] ?>">
+                                                            <input required type="number" class="form-control" id="no_hp_user" name="no_hp_user" value="<?= $data['no_hp_user'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="email_user">Email</label>
-                                                            <input required type="email" class="form-control" id="email_user" name="email_user" value="<?= $data['email_user'] ?>">
+                                                            <input required type="email" class="form-control" id="email_user" name="email_user" value="<?= $data['email_user'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="password_user">Password</label>
@@ -145,15 +155,15 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="nama_lengkap_user">Nama Lengkap</label>
-                                            <input required type="text" class="form-control" id="nama_lengkap_user" name="nama_lengkap_user">
+                                            <input required type="text" class="form-control" id="nama_lengkap_user" name="nama_lengkap_user" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="no_hp_user">No. HP</label>
-                                            <input required type="number" class="form-control" id="no_hp_user" name="no_hp_user">
+                                            <input required type="number" class="form-control" id="no_hp_user" name="no_hp_user" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="email_user">Email</label>
-                                            <input required type="email" class="form-control" id="email_user" name="email_user">
+                                            <input required type="email" class="form-control" id="email_user" name="email_user" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="password_user">Password</label>

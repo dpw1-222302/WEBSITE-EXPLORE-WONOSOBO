@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,39 +37,37 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Nama Destinasi</th>
                                     <th>Gambar</th>
+                                    <th>Nama Destinasi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_destinasi";
+                                $query = "SELECT * FROM tabel_destinasi ORDER BY destinasi_id DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
-                                        <td style="width: 700px;">
-                                            <?= $data['nama_destinasi'] ?>
-                                        </td>
-
                                         <td>
                                             <img src="<?= $data['img_destinasi'] ?>" class="" alt="" style="width: 200px;">
                                         </td>
-
-                                        
+                                        <td style="width: 700px;">
+                                            <?= $data['nama_destinasi'] ?>
+                                        </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['destinasi_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['destinasi_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['destinasi_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['destinasi_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['destinasi_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['destinasi_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Destinasi</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Destinasi</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -78,19 +77,22 @@ if (!isset($_SESSION['user_id'])) {
                                                         <input type="hidden" name="destinasi_id" value="<?= $data['destinasi_id'] ?>">
                                                         <div class="form-group">
                                                             <label for="nama_destinasi">Nama Destinasi</label>
-                                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi" value="<?= $data['nama_destinasi'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi" value="<?= $data['nama_destinasi'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="img_destinasi">Gambar</label>
-                                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi" value="<?= $data['img_destinasi'] ?>">
+                                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi" value="<?= $data['img_destinasi'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="deskripsi_destinasi">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_destinasi" rows="3" name="deskripsi_destinasi"><?= $data['deskripsi_destinasi'] ?></textarea>
+                                                            <label for="editorEdit">Deskripsi</label>
+                                                            <textarea id="editorEdit" name="deskripsidestinasi<?= $data['destinasi_id'] ?>"><?= $data['deskripsi_destinasi'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsidestinasi<?= $data['destinasi_id'] ?>');
+                                                            </script>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="link_google_maps_destinasi">Link Google Maps</label>
-                                                            <input required type="text" class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi" value="<?= $data['link_google_maps_destinasi'] ?>">
+                                                            <textarea required class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi"><?= $data['link_google_maps_destinasi'] ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -121,6 +123,25 @@ if (!isset($_SESSION['user_id'])) {
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['destinasi_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Destinasi</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_destinasi'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_destinasi'] ?></h2>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_destinasi'] ?></p>
+                                                    <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_destinasi'] ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -129,8 +150,8 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
@@ -144,19 +165,22 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="nama_destinasi">Nama Destinasi</label>
-                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi">
+                                            <input required type="text" class="form-control" id="nama_destinasi" name="nama_destinasi" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="img_destinasi">Gambar</label>
-                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi">
+                                            <input required type="text" class="form-control" id="img_destinasi" name="img_destinasi" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_destinasi">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_destinasi" rows="3" name="deskripsi_destinasi"></textarea>
+                                            <textarea id="deskripsi_destinasi" name="deskripsidestinasi"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsidestinasi');
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label for="link_google_maps_destinasi">Link Google Maps</label>
-                                            <input required type="text" class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi">
+                                            <textarea required class="form-control" id="link_google_maps_destinasi" name="link_google_maps_destinasi"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

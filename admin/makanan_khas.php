@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,37 +37,37 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Gambar</th>
                                     <th>Nama Makanan</th>
-                                    <th>Deskripsi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_makanan_khas";
+                                $query = "SELECT * FROM tabel_makanan_khas ORDER BY makanan_khas_id DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
                                         <td>
+                                            <img src="<?= $data['img_makanan_khas'] ?>" alt="" style="width: 200px;">
+                                        </td>
+                                        <td style="width: 500px;">
                                             <?= $data['nama_makanan_khas'] ?>
                                         </td>
-
                                         <td>
-                                            <?= $data['deskripsi_makanan_khas'] ?>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['makanan_khas_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['makanan_khas_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['makanan_khas_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['makanan_khas_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['makanan_khas_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['makanan_khas_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Makanan Khas</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Makanan Khas</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -75,12 +76,19 @@ if (!isset($_SESSION['user_id'])) {
                                                     <div class="modal-body">
                                                         <input type="hidden" name="makanan_khas_id" value="<?= $data['makanan_khas_id'] ?>">
                                                         <div class="form-group">
+                                                            <label for="img_makanan_khas">Gambar</label>
+                                                            <input required type="text" class="form-control" id="img_makanan_khas" name="img_makanan_khas" value="<?= $data['img_makanan_khas'] ?>" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="nama_makanan_khas">Nama Makanan</label>
-                                                            <input required type="text" class="form-control" id="nama_makanan_khas" name="nama_makanan_khas" value="<?= $data['nama_makanan_khas'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_makanan_khas" name="nama_makanan_khas" value="<?= $data['nama_makanan_khas'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="deskripsi_makanan_khas">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_makanan_khas" rows="3" name="deskripsi_makanan_khas"><?= $data['deskripsi_makanan_khas'] ?></textarea>
+                                                            <textarea id="deskripsi_makanan_khas" name="deskripsimakanankhas<?= $data['makanan_khas_id'] ?>"><?= $data['deskripsi_makanan_khas'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsimakanankhas<?= $data['makanan_khas_id'] ?>');
+                                                            </script>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -111,6 +119,24 @@ if (!isset($_SESSION['user_id'])) {
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['makanan_khas_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Makanan Khas</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_makanan_khas'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_makanan_khas'] ?></h2>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_makanan_khas'] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -119,8 +145,8 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
@@ -133,12 +159,19 @@ if (!isset($_SESSION['user_id'])) {
                                 <form method="POST" action="makanan_khas/tambah.php"> <!-- arahkan ke folder yang dituju -->
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <label for="img_makanan_khas">Gambar</label>
+                                            <input required type="text" class="form-control" id="img_makanan_khas" name="img_makanan_khas" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="nama_makanan_khas">Nama Makanan</label>
-                                            <input required type="text" class="form-control" id="nama_makanan_khas" name="nama_makanan_khas">
+                                            <input required type="text" class="form-control" id="nama_makanan_khas" name="nama_makanan_khas" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_makanan_khas">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_makanan_khas" rows="3" name="deskripsi_makanan_khas"></textarea>
+                                            <textarea id="deskripsi_makanan_khas" name="deskripsimakanankhas"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsimakanankhas');
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

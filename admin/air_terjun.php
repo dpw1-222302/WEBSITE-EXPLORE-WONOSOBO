@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id'])) {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -36,9 +37,8 @@ if (!isset($_SESSION['user_id'])) {
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>gambar</th>
                                     <th>Nama Air Terjun</th>
-                                    <th>Deskripsi</th>
-                                    <th>Kecamatan</th>
                                     <th>Ketinggian</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -46,34 +46,32 @@ if (!isset($_SESSION['user_id'])) {
                             <tbody>
                                 <?php
                                 include '../connect.php';
-                                $query = "SELECT * FROM tabel_air_terjun";
+                                $query = "SELECT * FROM tabel_air_terjun ORDER BY air_terjun_id DESC";
                                 $datas = $conn->query($query);
                                 foreach ($datas as $data) :
                                 ?>
                                     <tr>
                                         <td>
+                                            <img src="<?= $data['img_air_terjun'] ?>" alt="" style="width: 200px;">
+                                        </td>
+                                        <td style="width: 500px;">
                                             <?= $data['nama_air_terjun'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['deskripsi_air_terjun'] ?>
-                                        </td>
-                                        <td>
-                                            <?= $data['kecamatan_air_terjun'] ?>
                                         </td>
                                         <td>
                                             <?= $data['ketinggian_air_terjun'] ?> Meter
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['air_terjun_id'] ?>">Edit</button>
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['air_terjun_id'] ?>">Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editDataModal<?= $data['air_terjun_id'] ?>">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#hapusDataModal<?= $data['air_terjun_id'] ?>">Hapus</button>
                                         </td>
                                     </tr>
                                     <!-- Modal ubah data -->
-                                    <div class="modal fade" id="editDataModal<?= $data['air_terjun_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="editDataModal<?= $data['air_terjun_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="editDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editDataModalLabel">Tambah Data Air Terjun</h5>
+                                                    <h5 class="modal-title" id="editDataModalLabel">Ubah Data Air Terjun</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -82,24 +80,27 @@ if (!isset($_SESSION['user_id'])) {
                                                     <div class="modal-body">
                                                         <input type="hidden" name="air_terjun_id" value="<?= $data['air_terjun_id'] ?>">
                                                         <div class="form-group">
+                                                            <label for="img_air_terjun">Gambar</label>
+                                                            <input required type="text" class="form-control" id="img_air_terjun" name="img_air_terjun" value="<?= $data['img_air_terjun'] ?>" autocomplete="off">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="nama_air_terjun">Nama Air Terjun</label>
-                                                            <input required type="text" class="form-control" id="nama_air_terjun" name="nama_air_terjun" value="<?= $data['nama_air_terjun'] ?>">
+                                                            <input required type="text" class="form-control" id="nama_air_terjun" name="nama_air_terjun" value="<?= $data['nama_air_terjun'] ?>" autocomplete="off">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="deskripsi_air_terjun">Deskripsi</label>
-                                                            <textarea required class="form-control" id="deskripsi_air_terjun" rows="3" name="deskripsi_air_terjun"><?= $data['deskripsi_air_terjun'] ?></textarea>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="kecamatan_air_terjun">Kecamatan</label>
-                                                            <select required class="form-control" id="kecamatan_air_terjun" name="kecamatan_air_terjun">
-                                                                <option value="">Pilih Kecamatan:</option>
-                                                                <option value="1" <?= ($data['kecamatan_air_terjun'] == 1) ? 'selected' : '' ?>>Kecamatan 1</option>
-                                                                <option value="2" <?= ($data['kecamatan_air_terjun'] == 2) ? 'selected' : '' ?>>Kecamatan 2</option>
-                                                            </select>
+                                                            <textarea id="deskripsi_air_terjun" name="deskripsiairterjun<?= $data['air_terjun_id'] ?>"><?= $data['deskripsi_air_terjun'] ?></textarea>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsiairterjun<?= $data['air_terjun_id'] ?>');
+                                                            </script>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="ketinggian_air_terjun">Ketinggian</label>
                                                             <input required type="number" class="form-control" id="ketinggian_air_terjun" name="ketinggian_air_terjun" value="<?= $data['ketinggian_air_terjun'] ?>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="link_google_maps_air_terjun">Link Google Maps</label>
+                                                            <textarea required class="form-control" id="link_google_maps_air_terjun" name="link_google_maps_air_terjun"><?= $data['link_google_maps_air_terjun'] ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -130,6 +131,26 @@ if (!isset($_SESSION['user_id'])) {
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal show data -->
+                                    <div class="modal fade bd-example-modal-lg" id="showDataModal<?= $data['air_terjun_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="showDataModalLabel" ariahidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="showDataModalLabel">Show Data Air terjun</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_air_terjun'] ?>); background-size: cover;"></div>
+                                                    <h2 class="my-4"><?= $data['nama_air_terjun'] ?></h2>
+                                                    <p class="mb-3">Tinggi: <?= $data['ketinggian_air_terjun'] ?> Meter</p>
+                                                    <p style="text-align: justify;"><?= $data['deskripsi_air_terjun'] ?></p>
+                                                    <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_air_terjun'] ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -138,8 +159,8 @@ if (!isset($_SESSION['user_id'])) {
                         Tambah Data
                     </button>
                     <!-- Modal tambah data -->
-                    <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="tambahDataModalLabel">
@@ -152,24 +173,27 @@ if (!isset($_SESSION['user_id'])) {
                                 <form method="POST" action="air_terjun/tambah.php"> <!-- arahkan ke folder yang dituju -->
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <label for="img_air_terjun">Gambar</label>
+                                            <input required type="text" class="form-control" id="img_air_terjun" name="img_air_terjun" autocomplete="off">
+                                        </div>
+                                        <div class="form-group">
                                             <label for="nama_air_terjun">Nama Air Terjun</label>
-                                            <input required type="text" class="form-control" id="nama_air_terjun" name="nama_air_terjun">
+                                            <input required type="text" class="form-control" id="nama_air_terjun" name="nama_air_terjun" autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <label for="deskripsi_air_terjun">Deskripsi</label>
-                                            <textarea required class="form-control" id="deskripsi_air_terjun" rows="3" name="deskripsi_air_terjun"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="kecamatan_air_terjun">Kecamatan</label>
-                                            <select required class="form-control" id="kecamatan_air_terjun" name="kecamatan_air_terjun">
-                                                <option value="">Pilih Kecamatan:</option>
-                                                <option value="1">Kecamatan 1</option>
-                                                <option value="2">Kecamatan 2</option>
-                                            </select>
+                                            <textarea id="deskripsi_air_terjun" name="deskripsiairterjun"></textarea>
+                                            <script>
+                                                CKEDITOR.replace('deskripsiairterjun');
+                                            </script>
                                         </div>
                                         <div class="form-group">
                                             <label for="ketinggian_air_terjun">Ketinggian</label>
                                             <input required type="number" class="form-control" id="ketinggian_air_terjun" name="ketinggian_air_terjun">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="link_google_maps_air_terjun">Link Google Maps</label>
+                                            <textarea required class="form-control" id="link_google_maps_air_terjun" name="link_google_maps_air_terjun"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
