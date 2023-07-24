@@ -30,9 +30,139 @@ if (!isset($_SESSION['user_id'])) {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="my-4">Dashboard</h1>
                     <!-- isi konten mulai dari sini -->
-                    
+                    <div class="card-deck">
+                        <div class="card text-white bg-primary mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Gunung</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(gunung_id) AS total FROM tabel_gunung";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                        <div class="card text-white bg-secondary mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Event</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(kalender_event_id) AS total FROM tabel_kalender_event";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-deck">
+                        <div class="card text-white bg-success mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Air Terjun</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(air_terjun_id) AS total FROM tabel_air_terjun";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                        <div class="card text-white bg-danger mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Danau</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(danau_id) AS total FROM tabel_danau";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-deck">
+                        <div class="card text-white bg-warning mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Makanan Khas</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(makanan_khas_id) AS total FROM tabel_makanan_khas";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                        <div class="card text-white bg-info mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Oleh-oleh</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(oleh_oleh_id) AS total FROM tabel_oleh_oleh";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-deck">
+                        <div class="card text-white bg-dark mb-3 text-center">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Destinasi</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(destinasi_id) AS total FROM tabel_destinasi";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                        <div class="card text-white mb-3 text-center" style="background-color: purple;">
+                            <div class="card-header">Jumlah</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Album</h5>
+                                <?php
+                                include '../connect.php';
+                                $sql = "SELECT COUNT(album_id) AS total FROM tabel_album";
+                                $result = $conn->query($sql);
+                                $row = $result->fetch_assoc();
+                                $totalRows = $row['total'];
+
+                                echo "<h1>$totalRows</h1>";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                     <!-- isi konten berakhir di sini -->
                 </div>
             </main>

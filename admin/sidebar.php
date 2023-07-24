@@ -43,6 +43,10 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Destinasi
             </a>
+            <a class="nav-link" href="album.php">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Album
+            </a>
 
             <!-- Sampai sini -->
 
