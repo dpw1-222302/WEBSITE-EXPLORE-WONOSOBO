@@ -20,6 +20,25 @@
             -webkit-transform: scale(1.03);
             transform: scale(1.03);
         }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            /* Mengatur aspek rasio menjadi 16:9 */
+            padding-top: 56.25%;
+            /* 9 / 16 * 100% */
+            /* Jika Anda ingin menggunakan padding-bottom, gunakan properti ini: */
+            /* padding-bottom: 56.25%; */
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -50,10 +69,12 @@
                 <div class="col">
                     <div class="card h-100 rounded-4 hover-shadow">
                         <a type="button" class="link-body-emphasis text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['gunung_id'] ?>">
-                            <img src="<?= $data['img_gunung'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            <div class="image-container">
+                                <img src="<?= $data['img_gunung'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $data['nama_gunung'] ?></h5>
-                                <p class="card-text">Ketinggian : <?= $data['ketinggian_gunung'] ?> MDPL</p>
+                                <p class="card-text">Ketinggian : <?= number_format($data['ketinggian_gunung'], 0, ',', '.') ?> MDPL</p>
                             </div>
                         </a>
                     </div>
@@ -69,7 +90,7 @@
                             <div class="modal-body">
                                 <img src="<?= $data['img_gunung'] ?>" class="rounded-4 w-100">
                                 <h2 class="my-4"><?= $data['nama_gunung'] ?></h2>
-                                <p class="mb-3">Ketinggian: <?= $data['ketinggian_gunung'] ?> MDPL</p>
+                                <p class="mb-3">Ketinggian: <?= number_format($data['ketinggian_gunung'], 0, ',', '.') ?> MDPL</p>
                                 <p style="text-align: justify;"><?= $data['deskripsi_gunung'] ?></p>
                                 <div class="text-center mt-5">
                                     <?= $data['link_google_maps_gunung'] ?>

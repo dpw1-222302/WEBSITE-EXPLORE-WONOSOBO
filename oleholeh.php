@@ -20,6 +20,25 @@
             -webkit-transform: scale(1.03);
             transform: scale(1.03);
         }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            /* Mengatur aspek rasio menjadi 16:9 */
+            padding-top: 56.25%;
+            /* 9 / 16 * 100% */
+            /* Jika Anda ingin menggunakan padding-bottom, gunakan properti ini: */
+            /* padding-bottom: 56.25%; */
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -50,7 +69,9 @@
                 <div class="col">
                     <div class="card h-100 rounded-4 hover-shadow">
                         <a type="button" class="link-body-emphasis text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['oleh_oleh_id'] ?>">
-                            <img src="<?= $data['img_oleh_oleh'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            <div class="image-container">
+                                <img src="<?= $data['img_oleh_oleh'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $data['nama_oleh_oleh'] ?></h5>
                             </div>

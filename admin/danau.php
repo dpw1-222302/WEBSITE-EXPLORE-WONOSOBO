@@ -58,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <?= $data['nama_danau'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['luas_danau'] ?> Meter<sup>2</sup>
+                                            <?= number_format($data['luas_danau'], 0, ',', '.') ?> Meter<sup>2</sup>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['danau_id'] ?>">Show</button>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['user_id'])) {
                                                 <div class="modal-body">
                                                     <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_danau'] ?>); background-size: cover;"></div>
                                                     <h2 class="my-4"><?= $data['nama_danau'] ?></h2>
-                                                    <p class="mb-3">Luas Danau: <?= $data['luas_danau'] ?> Meter<sup>2</sup></p>
+                                                    <p class="mb-3">Luas Danau: <?= number_format($data['luas_danau'], 0, ',', '.') ?> Meter<sup>2</sup></p>
                                                     <p style="text-align: justify;"><?= $data['deskripsi_danau'] ?></p>
                                                     <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_danau'] ?></textarea>
                                                 </div>
