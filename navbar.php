@@ -26,7 +26,7 @@
         }
     }
 </style>
-<nav class="blur-burger navbar navbar-expand-xxl fixed-top py-3">
+<nav class="blur-burger navbar navbar-expand-lg fixed-top py-3">
     <div class="container">
         <a class="navbar-brand py-0 rounded-end-5" href="index.php" style="border: 2px solid var(--bs-body-bg);"><span class="px-2" style="background-color: var(--bs-body-bg); color: var(--bs-light-text-emphasis); border: 3px solid var(--bs-body-bg);">EXPLORE</span><span class="px-2">WONOSOBO</span></a>
 
@@ -47,20 +47,24 @@
                 <li class="nav-item ms-3">
                     <a class="nav-link" href="destinasi.php">Destinasi</a>
                 </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="gunung.php">Gunung</a>
+                <li class="nav-item ms-3 dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Alam
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="gunung.php">Gunung</a></li>
+                        <li><a class="dropdown-item" href="danau.php">Danau</a></li>
+                        <li><a class="dropdown-item" href="airterjun.php">Air Terjun</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="danau.php">Danau</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="airterjun.php">Air Terjun</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="makanankhas.php">Makanan Khas</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link" href="oleholeh.php">Oleh-Oleh</a>
+                <li class="nav-item ms-3 dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Makanan
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="makanankhas.php">Makanan Khas</a></li>
+                        <li><a class="dropdown-item" href="oleholeh.php">Oleh-Oleh</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item ms-3">
                     <a class="nav-link" href="album.php">Album</a>

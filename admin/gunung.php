@@ -58,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <?= $data['nama_gunung'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['ketinggian_gunung'] ?> MDPL
+                                            <?= number_format($data['ketinggian_gunung'], 0, ',', '.') ?> MDPL
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['gunung_id'] ?>">Show</button>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['user_id'])) {
                                                 <div class="modal-body">
                                                     <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_gunung'] ?>); background-size: cover;"></div>
                                                     <h2 class="my-4"><?= $data['nama_gunung'] ?></h2>
-                                                    <p class="mb-3"><?= $data['ketinggian_gunung'] ?> MDPL</p>
+                                                    <p class="mb-3"><?= number_format($data['ketinggian_gunung'], 0, ',', '.') ?> MDPL</p>
                                                     <p style="text-align: justify;"><?= $data['deskripsi_gunung'] ?></p>
                                                     <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_gunung'] ?></textarea>
                                                 </div>

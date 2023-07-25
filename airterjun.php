@@ -20,6 +20,25 @@
             -webkit-transform: scale(1.03);
             transform: scale(1.03);
         }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            /* Mengatur aspek rasio menjadi 16:9 */
+            padding-top: 56.25%;
+            /* 9 / 16 * 100% */
+            /* Jika Anda ingin menggunakan padding-bottom, gunakan properti ini: */
+            /* padding-bottom: 56.25%; */
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -50,10 +69,12 @@
                 <div class="col">
                     <div class="hover-shadow card h-100 rounded-4">
                         <a type="button" class="link-body-emphasis text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['air_terjun_id'] ?>">
-                            <img src="<?= $data['img_air_terjun'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            <div class="image-container">
+                                <img src="<?= $data['img_air_terjun'] ?>" class="card-img-top rounded-top-4" alt="...">
+                            </div>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $data['nama_air_terjun'] ?></h5>
-                                <p class="card-text">Tinggi Air Terjun : <?= $data['ketinggian_air_terjun'] ?> Meter</p>
+                                <p class="card-text">Tinggi Air Terjun : <?= number_format($data['ketinggian_air_terjun'], 0, ',', '.') ?> Meter</p>
                             </div>
                         </a>
                     </div>
@@ -69,7 +90,7 @@
                             <div class="modal-body">
                                 <img src="<?= $data['img_air_terjun'] ?>" class="rounded-4 w-100">
                                 <h2 class="my-4"><?= $data['nama_air_terjun'] ?></h2>
-                                <p class="mb-3">Tinggi Air Terjun : <?= $data['ketinggian_air_terjun'] ?> Meter</p>
+                                <p class="mb-3">Tinggi Air Terjun : <?= number_format($data['ketinggian_air_terjun'], 0, ',', '.') ?> Meter</p>
                                 <p style="text-align: justify;"><?= $data['deskripsi_air_terjun'] ?></p>
                                 <div class="text-center mt-5">
                                     <?= $data['link_google_maps_air_terjun'] ?>

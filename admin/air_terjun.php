@@ -58,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <?= $data['nama_air_terjun'] ?>
                                         </td>
                                         <td>
-                                            <?= $data['ketinggian_air_terjun'] ?> Meter
+                                            <?= number_format($data['ketinggian_air_terjun'], 0, ',', '.') ?> Meter
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showDataModal<?= $data['air_terjun_id'] ?>">Show</button>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['user_id'])) {
                                                 <div class="modal-body">
                                                     <div class="w-100" style="height: 430.875px; background-image: url(<?= $data['img_air_terjun'] ?>); background-size: cover;"></div>
                                                     <h2 class="my-4"><?= $data['nama_air_terjun'] ?></h2>
-                                                    <p class="mb-3">Tinggi: <?= $data['ketinggian_air_terjun'] ?> Meter</p>
+                                                    <p class="mb-3">Tinggi: <?= number_format($data['ketinggian_air_terjun'], 0, ',', '.') ?> Meter</p>
                                                     <p style="text-align: justify;"><?= $data['deskripsi_air_terjun'] ?></p>
                                                     <textarea class="form-control" rows="6" disabled><?= $data['link_google_maps_air_terjun'] ?></textarea>
                                                 </div>

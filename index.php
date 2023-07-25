@@ -28,7 +28,8 @@
       .maps-xl,
       .maps-lg,
       .maps-md,
-      .maps-sm {
+      .maps-sm,
+      .maps {
         display: none;
       }
     }
@@ -38,7 +39,8 @@
       .maps-xxl,
       .maps-lg,
       .maps-md,
-      .maps-sm {
+      .maps-sm,
+      .maps {
         display: none;
       }
 
@@ -180,47 +182,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 1 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -234,47 +236,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 2 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -288,47 +290,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 3 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
@@ -343,47 +345,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 4 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
@@ -407,47 +409,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 5 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -461,47 +463,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 6 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -515,47 +517,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 7 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
@@ -570,47 +572,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 8 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
@@ -634,47 +636,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 9 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -688,47 +690,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 10 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
               </div>
             </div>
@@ -742,47 +744,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 11 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
@@ -797,47 +799,47 @@
                 </div>
 
                 <div class="card-body">
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
+                  <?php
+                  include 'connect.php';
+                  $currentYear = date('Y');
+                  $query = "SELECT * FROM tabel_kalender_event WHERE MONTH(tanggal_event) = 12 AND YEAR(tanggal_event) = $currentYear ORDER BY tanggal_event ASC";
+                  $datas = $conn->query($query);
+                  foreach ($datas as $data) :
+                  ?>
+                    <a href="#" class="text-decoration-none link-body-emphasis" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $data['kalender_event_id'] ?>">
+                      <div class="card-text mb-3">
+                        <div class="d-flex align-items-start">
+                          <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
+                          <div>
+                            <h6 class="card-subtitle mb-1"><?= $data['nama_event'] ?></h6>
+                            <span class="card-text text-body-secondary">Tanggal: <?= explode('-', $data['tanggal_event'])[2] ?></span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <!-- Detail event -->
+                    <div class="modal fade" id="exampleModal<?= $data['kalender_event_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content rounded-4">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"><?= $data['nama_event'] ?></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <img src="<?= $data['img_kalender_event'] ?>" class="rounded-4 w-100">
+                            <h2 class="my-4"><?= $data['nama_event'] ?></h2>
+                            <p class="mb-3">Tanggal: <?= date('l, d F Y', strtotime($data['tanggal_event'])) ?></p>
+                            <p class="mb-3">Tempat: <?= $data['tempat_event'] ?></p>
+                            <p style="text-align: justify;"><?= $data['deskripsi_event'] ?></p>
+                            <div class="text-center mt-5">
+                              <?= $data['link_google_maps_event'] ?>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="card-text mb-3">
-                    <div class="d-flex align-items-start">
-                      <i class="fa-solid fa-calendar-day fa-2xl me-2 mt-3"></i>
-                      <div>
-                        <h6 class="card-subtitle mb-1">Lorem ipsum dolor sit ametasaa</h6>
-                        <span class="card-text text-body-secondary">Tanggal : 2</span>
-                      </div>
-                    </div>
-                  </div>
-
+                    <!-- End Detail Event -->
+                  <?php endforeach ?>
                 </div>
 
               </div>
