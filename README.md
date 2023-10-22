@@ -22,4 +22,4 @@ Pada website Explore Wonosobo ini ada beberapa fitur yang dikembangkan yaitu:
 6. Tema, pada website ini kami menambahkan fitur tema website yaitu light, dark, dan auto (menyesuaikan tema sistem).
 
 ## PANDUAN PENGGUNAAN FITUR YANG TERSEDIA PADA WEB
-- [Panduan pengunjung] (https://drive.google.com/file/d/1QwQX9gbcCK72l5MXEmG5Y8Mg37ONKRw2/view)
+- [Panduan pengunjung](https://drive.google.com/file/d/1QwQX9gbcCK72l5MXEmG5Y8Mg37ONKRw2/view)
